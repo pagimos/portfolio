@@ -65,7 +65,7 @@ const PostCard = ({ href, title, date }) => (
     rel="noopener noreferrer"
   >
     <div className="md:flex justify-between w-full">
-      <p className="font-xm text-l md:text-right text-sm md:text-xl">{title}</p>
+      <p className="">{title}</p>
       <p className="text-right md:text-base text-xs my-auto">{date}</p>
     </div>
   </a>
@@ -120,7 +120,7 @@ function App() {
         "An ambitious project set to revolutionize inventory and sales management in businesses, enhancing efficiency and integration.",
     },
     {
-      href: "https://www.digitalbitwave.com",
+      href: "https://www.instagram.com/digital.bitwave",
       imageSrc: "../dbitwave.png",
       title: "Digital Bitwave",
       description:
@@ -161,8 +161,8 @@ function App() {
   const { scrollYProgress } = useScroll();
   // Handlers for hover state are not needed for this simplified approach
   return (
-    <div className="flex-col mx-auto  ">
-      <div className="text-white flex flex-col md:flex-row-reverse justify-around mx-4 sm:mx-24 md:mx-48 gap-4 sm:gap-6 md:gap-10 mt-10 ">
+    <div className="flex-col mx-auto max-w-[96ch]  ">
+      <div className="text-white flex flex-row-reverse justify-around  gap-4 sm:gap-6 md:gap-10 mt-10 ">
         <motion.div
           className="m-auto w-36 md:w-96  "
           initial={{ y: -50 }}
@@ -227,7 +227,7 @@ function App() {
         </div>
       </div>
 
-      <div className="flex flex-col text-white mt-24 xl:mx-72 mx-4 md:mx-16">
+      <div className="flex flex-col text-white mt-24 max-w-[76ch] mx-auto">
         <div className="flex justify-between">
           <p className="text-3xl font-semibold">Projects</p>
 
@@ -245,7 +245,7 @@ function App() {
         ))}
       </div>
 
-      <motion.div className="flex flex-col text-white mt-24 xl:mx-72 mb-24 mx-4 md:mx-16">
+      <motion.div className="flex flex-col text-white mt-24 max-w-[76ch] mx-auto ">
         <div className="flex justify-between mb-3">
           <p className="text-3xl font-semibold">Latest Posts</p>
 
