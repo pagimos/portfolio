@@ -185,7 +185,7 @@ function App() {
             Hi, I'm Pagimos.
           </motion.div>
           <motion.div
-            className="text-xl sm:text-xl md:text-2xl font-bold mb-5 text-yellow-400"
+            className="text-xl sm:text-xl md:text-2xl font-bold mb-5 text-[#ffb000]"
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
