@@ -190,7 +190,7 @@ function App() {
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
           >
-            Full Stack developer
+            Full Stack Developer
           </motion.div>
           <div className="text-lg sm:text-xl md:text-xl">
             As a Full Stack Developer with a fervent passion for
