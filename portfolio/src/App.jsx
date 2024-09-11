@@ -162,16 +162,16 @@ function App() {
   // Handlers for hover state are not needed for this simplified approach
   return (
     <>
-      <div className="px-6 py-[8vh] max-w-[78ch] mx-auto xl:text-lg dark:prose-invert ">
-        <div className="text-white flex flex-row-reverse justify-around  gap-4 sm:gap-6 md:gap-10 mt-10 ">
+      <div className="px-6 md:py-[8vh] py-[2vh] max-w-[78ch] mx-auto xl:text-lg dark:prose-invert ">
+        <div className="text-white md:flex flex-row-reverse justify-around  gap-4 sm:gap-6 md:gap-10 mt-10 ">
           <motion.div
-            className="m-auto w-36 md:w-96  "
+            className="m-auto w-48 md:w-96  "
             initial={{ y: -50 }}
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
           >
             <img
-              className="rounded-full border-2 border-white "
+              className="rounded-full border-2 border-white mb-8"
               src="../avatar.png"
               alt=""
             />
@@ -198,7 +198,7 @@ function App() {
               user-friendly websites that make every interaction easy and
               enjoyable.
             </div>
-            <div className="mt-6">
+            <div className="mt-6 ">
               {socialLinksConfig.map(
                 ({
                   id,
