@@ -64,9 +64,9 @@ const PostCard = ({ href, title, date }) => (
     href={href}
     rel="noopener noreferrer"
   >
-    <div className="md:flex justify-between w-full">
+    <div className="md:flex justify-between w-full gap-12">
       <p className="">{title}</p>
-      <p className="text-right md:text-base text-xs my-auto">{date}</p>
+      <p className="text-right md:text-base text-xs my-auto w-40">{date}</p>
     </div>
   </a>
 );
@@ -161,112 +161,112 @@ function App() {
   const { scrollYProgress } = useScroll();
   // Handlers for hover state are not needed for this simplified approach
   return (
-    <div className="flex-col mx-auto max-w-[96ch]  ">
-      <div className="text-white flex flex-row-reverse justify-around  gap-4 sm:gap-6 md:gap-10 mt-10 ">
-        <motion.div
-          className="m-auto w-36 md:w-96  "
-          initial={{ y: -50 }}
-          animate={{ y: 0 }}
-          transition={{ type: "spring", stiffness: 100 }}
-        >
-          <img
-            className="rounded-full border-2 border-white "
-            src="../avatar.png"
-            alt=""
-          />
-        </motion.div>
-        <div className="justify-center flex flex-col">
+    <>
+      <div className="px-6 py-[8vh] max-w-[78ch] mx-auto xl:text-lg dark:prose-invert ">
+        <div className="text-white flex flex-row-reverse justify-around  gap-4 sm:gap-6 md:gap-10 mt-10 ">
           <motion.div
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold my-2"
-            initial={{ x: -2000 }}
-            animate={{ x: 0 }}
-            transition={{ type: "spring", stiffness: 50 }}
-          >
-            Hi, I'm Pagimos.
-          </motion.div>
-          <motion.div
-            className="text-xl sm:text-xl md:text-2xl font-bold mb-5 text-[#ffb000]"
-            initial={{ y: -20 }}
+            className="m-auto w-36 md:w-96  "
+            initial={{ y: -50 }}
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
           >
-            Full Stack Developer
+            <img
+              className="rounded-full border-2 border-white "
+              src="../avatar.png"
+              alt=""
+            />
           </motion.div>
-          <div className="text-lg sm:text-xl md:text-xl">
-            As a Full Stack Developer with a fervent passion for
-            problem-solving, I specialize in crafting highly intuitive and
-            user-centric websites that significantly elevate the user
-            experience.
+          <div className="justify-center flex flex-col">
+            <motion.div
+              className="text-4xl sm:text-5xl md:text-6xl font-extrabold my-2"
+              initial={{ x: -2000 }}
+              animate={{ x: 0 }}
+              transition={{ type: "spring", stiffness: 50 }}
+            >
+              Hi, I'm Pagimos.
+            </motion.div>
+            <motion.div
+              className="text-xl sm:text-xl md:text-2xl font-bold mb-2 text-[#ffb000]"
+              initial={{ y: -20 }}
+              animate={{ y: 0 }}
+              transition={{ type: "spring", stiffness: 100 }}
+            >
+              Full Stack Developer
+            </motion.div>
+            <div className="text-lg sm:text-xl md:text-xl w-full">
+              As a Full Stack Developer, I love solving problems and creating
+              user-friendly websites that make every interaction easy and
+              enjoyable.
+            </div>
+            <div className="mt-6">
+              {socialLinksConfig.map(
+                ({
+                  id,
+                  href,
+                  Icon,
+                  hoverBgClass,
+                  iconColor,
+                  hoverIconColor,
+                  label,
+                }) => (
+                  <SocialLink
+                    key={id}
+                    href={href}
+                    icon={Icon}
+                    hoverBgClass={hoverBgClass}
+                    iconColor={iconColor}
+                    hoverIconColor={hoverIconColor}
+                    onMouseEnter={() => {}}
+                    onMouseLeave={() => {}}
+                  >
+                    {label}
+                  </SocialLink>
+                )
+              )}
+            </div>
           </div>
-          <div>
-            {socialLinksConfig.map(
-              ({
-                id,
-                href,
-                Icon,
-                hoverBgClass,
-                iconColor,
-                hoverIconColor,
-                label,
-              }) => (
-                <SocialLink
-                  key={id}
-                  href={href}
-                  icon={Icon}
-                  hoverBgClass={hoverBgClass}
-                  iconColor={iconColor}
-                  hoverIconColor={hoverIconColor}
-                  onMouseEnter={() => {}}
-                  onMouseLeave={() => {}}
-                >
-                  {label}
-                </SocialLink>
-              )
-            )}
+        </div>
+
+        <div className="flex flex-col text-white mt-24 max-w-[76ch] mx-auto">
+          <div className="flex justify-between">
+            <p className="text-3xl font-semibold">Projects</p>
+
+            <ArrowUpRight />
           </div>
+
+          {projects.map(({ href, imageSrc, title, description }) => (
+            <ProjectCard
+              key={title}
+              href={href}
+              imageSrc={imageSrc}
+              title={title}
+              description={description}
+            />
+          ))}
         </div>
+
+        <motion.div className="flex flex-col text-white mt-24  mx-auto ">
+          <div className="flex justify-between mb-3">
+            <p className="text-3xl font-semibold">Latest Posts</p>
+
+            <ArrowUpRight />
+          </div>
+
+          {posts.map(({ href, title, description, date }) => (
+            <PostCard
+              key={title}
+              href={href}
+              title={title}
+              description={description}
+              date={date}
+            />
+          ))}
+        </motion.div>
       </div>
-
-      <div className="flex flex-col text-white mt-24 max-w-[76ch] mx-auto">
-        <div className="flex justify-between">
-          <p className="text-3xl font-semibold">Projects</p>
-
-          <ArrowUpRight />
-        </div>
-
-        {projects.map(({ href, imageSrc, title, description }) => (
-          <ProjectCard
-            key={title}
-            href={href}
-            imageSrc={imageSrc}
-            title={title}
-            description={description}
-          />
-        ))}
-      </div>
-
-      <motion.div className="flex flex-col text-white mt-24 max-w-[76ch] mx-auto ">
-        <div className="flex justify-between mb-3">
-          <p className="text-3xl font-semibold">Latest Posts</p>
-
-          <ArrowUpRight />
-        </div>
-
-        {posts.map(({ href, title, description, date }) => (
-          <PostCard
-            key={title}
-            href={href}
-            title={title}
-            description={description}
-            date={date}
-          />
-        ))}
-      </motion.div>
-
       <footer className=" inset-x-0 bottom-0 text-white text-center py-4">
         <p>Pagimos © 2024. All rights reserved.</p>
       </footer>
-    </div>
+    </>
   );
 }
 
