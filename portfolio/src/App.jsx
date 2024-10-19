@@ -126,6 +126,13 @@ function App() {
       description:
         "An innovative firm providing website development, marketing, and design services to enhance digital presence for businesses.",
     },
+    {
+      href: "https://www.intelculator.com",
+      imageSrc: "../intelculator.png",
+      title: "Intelculator",
+      description:
+        "is an IQ calculator website that provides accurate IQ results through interactive intelligence tests, helping users assess their cognitive abilities.",
+    },
   ];
   const posts = [
     {
