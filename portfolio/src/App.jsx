@@ -179,7 +179,7 @@ function App() {
           >
             <img
               className="rounded-full border-2 border-white mb-8"
-              src="../avatar.png"
+              src="../avatar.jpeg"
               alt=""
             />
           </motion.div>
