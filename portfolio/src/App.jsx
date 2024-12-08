@@ -190,7 +190,7 @@ function App() {
               animate={{ x: 0 }}
               transition={{ type: "spring", stiffness: 50 }}
             >
-              Hi, I'm Bouacheri Mohamed Islam (Pagimos).
+              Hi, I'm Pagimos.
             </motion.div>
             <motion.div
               className="text-xl sm:text-xl md:text-2xl font-bold mb-2 text-[#ffb000]"
