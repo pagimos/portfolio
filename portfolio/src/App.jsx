@@ -262,7 +262,6 @@ function App() {
       icon: Code,
       skills: [
         "React",
-        "Vue.js",
         "Next.js",
         "Tailwind CSS",
         "JavaScript",
@@ -273,32 +272,24 @@ function App() {
     {
       title: "Backend",
       icon: Layers,
-      skills: [
-        "Node.js",
-        "Express",
-        "Python",
-        "Django",
-        "PHP",
-        "REST API",
-        "GraphQL",
-      ],
+      skills: ["Node.js", "Express", "Python", "Django", "REST API", "GraphQL"],
     },
     {
       title: "Database",
       icon: Database,
-      skills: ["MongoDB", "MySQL", "PostgreSQL", "Firebase", "Redis"],
+      skills: [
+        "MongoDB",
+        "MySQL",
+        "PostgreSQL",
+        "Firebase",
+        "Redis",
+        "Supabase",
+      ],
     },
     {
       title: "Mobile & Other",
       icon: Smartphone,
-      skills: [
-        "React Native",
-        "Flutter",
-        "Git",
-        "Docker",
-        "AWS",
-        "UX/UI Design",
-      ],
+      skills: ["React Native", "Git", "Docker", "AWS", "UX/UI Design"],
     },
   ];
 
