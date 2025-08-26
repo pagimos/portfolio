@@ -434,7 +434,7 @@ export default function Home() {
               Full Stack Developer
             </motion.div>
             <div className="text-lg sm:text-xl md:text-xl w-full">
-            As a Full Stack Software Developer, I am passionate about solving complex problems and creating intuitive, user-friendly applications across web, mobile, and desktop platforms, delivering seamless and engaging experiences.
+            As aa Full Stack Software Developer, I am passionate about solving complex problems and creating intuitive, user-friendly applications across web, mobile, and desktop platforms, delivering seamless and engaging experiences.
             </div>
             <div className="mt-6 ">
               {socialLinksConfig.map(
