@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import {
   Github,
   Linkedin,
@@ -13,7 +14,7 @@ import {
   Smartphone,
   LucideIcon,
 } from "lucide-react";
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 
 // SocialLink Component
 const SocialLink = ({
@@ -410,10 +411,13 @@ export default function Home() {
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 100 }}
           >
-            <img
+            <Image
               className="rounded-full border-2 border-white mb-8 min-w-40 "
               src="/avatar.jpeg"
-              alt=""
+              alt="Pagimos - Full Stack Developer"
+              width={192}
+              height={192}
+              priority
             />
           </motion.div>
           <div className="justify-center flex flex-col">
@@ -434,7 +438,7 @@ export default function Home() {
               Full Stack Developer
             </motion.div>
             <div className="text-lg sm:text-xl md:text-xl w-full">
-            As aa Full Stack Software Developer, I am passionate about solving complex problems and creating intuitive, user-friendly applications across web, mobile, and desktop platforms, delivering seamless and engaging experiences.
+            As a Full Stack Software Developer, I am passionate about solving complex problems and creating intuitive, user-friendly applications across web, mobile, and desktop platforms, delivering seamless and engaging experiences.
             </div>
             <div className="mt-6 ">
               {socialLinksConfig.map(
