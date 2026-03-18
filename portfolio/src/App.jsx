@@ -304,7 +304,7 @@ function App() {
             transition={{ type: "spring", stiffness: 100 }}
           >
             <img
-              className="rounded-full border-2 border-white mb-8"
+              className="rounded-full border-2 border-white mb-8 min-w-40 "
               src="../avatar.jpeg"
               alt=""
             />
@@ -327,9 +327,7 @@ function App() {
               Full Stack Developer
             </motion.div>
             <div className="text-lg sm:text-xl md:text-xl w-full">
-              As a Full Stack Developer, I love solving problems and creating
-              user-friendly websites that make every interaction easy and
-              enjoyable.
+            As a Full Stack Software Developer, I am passionate about solving complex problems and creating intuitive, user-friendly applications across web, mobile, and desktop platforms, delivering seamless and engaging experiences.
             </div>
             <div className="mt-6 ">
               {socialLinksConfig.map(
