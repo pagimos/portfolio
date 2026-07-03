@@ -13,8 +13,7 @@
     "framer-motion": "^11.0.6",
     "lucide-react": "^0.323.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "remixicon": "^4.1.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
