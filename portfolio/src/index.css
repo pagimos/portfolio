@@ -42,16 +42,20 @@ body {
   background: #3a3b40;
 }
 
-/* Film grain overlay */
+/* Film grain overlay.
+   Kept to exactly one viewport (it was 200% x 200% = 4x the pixels to raster)
+   and promoted to its own compositor layer, so the moving spotlight beneath it
+   never forces the noise texture to repaint. */
 .grain::after {
   content: "";
   position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
+  inset: 0;
   pointer-events: none;
   z-index: 50;
   opacity: 0.05;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 

@@ -1,10 +1,5 @@
-import { useEffect } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useReducedMotion,
-} from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { socials } from "../data";
 
@@ -16,34 +11,69 @@ const lineVariants = {
   }),
 };
 
+const SPOT = 600;
+
 function Spotlight() {
   const reduceMotion = useReducedMotion();
-  const x = useMotionValue(-400);
-  const y = useMotionValue(-400);
-  const sx = useSpring(x, { stiffness: 60, damping: 20 });
-  const sy = useSpring(y, { stiffness: 60, damping: 20 });
+  const ref = useRef(null);
 
   useEffect(() => {
     if (reduceMotion) return;
-    const move = (e) => {
-      x.set(e.clientX - 300);
-      y.set(e.clientY - 300);
+    // Skip entirely on touch / coarse pointers — nothing to follow there.
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const half = SPOT / 2;
+    let raf = 0;
+    let running = false;
+    // target vs. rendered position
+    let tx = -SPOT;
+    let ty = -SPOT;
+    let cx = -SPOT;
+    let cy = -SPOT;
+
+    const tick = () => {
+      cx += (tx - cx) * 0.22;
+      cy += (ty - cy) * 0.22;
+
+      const el = ref.current;
+      if (el) el.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+
+      if (Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        running = false; // settled — stop burning frames until the next move
+      }
     };
-    window.addEventListener("mousemove", move, { passive: true });
-    return () => window.removeEventListener("mousemove", move);
-  }, [reduceMotion, x, y]);
+
+    const move = (e) => {
+      tx = e.clientX - half;
+      ty = e.clientY - half;
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    window.addEventListener("pointermove", move, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      cancelAnimationFrame(raf);
+    };
+  }, [reduceMotion]);
 
   if (reduceMotion) return null;
 
   return (
-    <motion.div
+    <div
+      ref={ref}
       aria-hidden
       className="pointer-events-none fixed top-0 left-0 z-0 h-[600px] w-[600px] rounded-full hidden md:block"
       style={{
-        x: sx,
-        y: sy,
         background:
           "radial-gradient(circle, rgba(214,242,80,0.07) 0%, transparent 60%)",
+        transform: `translate3d(${-SPOT}px, ${-SPOT}px, 0)`,
+        willChange: "transform",
+        contain: "strict",
       }}
     />
   );
@@ -54,16 +84,23 @@ export default function Hero() {
     <section id="top" className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       <Spotlight />
 
-      {/* Static ambient glows */}
+      {/* Static ambient glows — pure gradients, no blur() filter (filters force
+          an expensive re-composite every time the spotlight moves under them) */}
       <div
         aria-hidden
-        className="absolute -top-40 right-[-10%] h-[480px] w-[480px] rounded-full blur-3xl opacity-20"
-        style={{ background: "radial-gradient(circle, #d6f250 0%, transparent 65%)" }}
+        className="absolute -top-40 right-[-10%] h-[480px] w-[480px] rounded-full opacity-20"
+        style={{
+          background:
+            "radial-gradient(circle, #d6f250 0%, rgba(214,242,80,0.35) 35%, transparent 70%)",
+        }}
       />
       <div
         aria-hidden
-        className="absolute bottom-[-20%] left-[-15%] h-[520px] w-[520px] rounded-full blur-3xl opacity-10"
-        style={{ background: "radial-gradient(circle, #5e7cff 0%, transparent 65%)" }}
+        className="absolute bottom-[-20%] left-[-15%] h-[520px] w-[520px] rounded-full opacity-10"
+        style={{
+          background:
+            "radial-gradient(circle, #5e7cff 0%, rgba(94,124,255,0.35) 35%, transparent 70%)",
+        }}
       />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 w-full pt-32 pb-20">
