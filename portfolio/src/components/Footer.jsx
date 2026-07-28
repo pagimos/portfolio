@@ -1,6 +1,134 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ArrowUp } from "lucide-react";
 import { socials } from "../data";
+
+const WORD = "PAGIMOS";
+const REST_TILT = 9; // degrees of rotateX the slab sits at when idle
+
+function GlassWordmark() {
+  const reduceMotion = useReducedMotion();
+  const wrapRef = useRef(null);
+  const stageRef = useRef(null);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    let raf = 0;
+    let running = false;
+    let listening = false;
+    let havePointer = false;
+    let mx = 0;
+    let my = 0;
+    // cached geometry — recomputed at most once per frame, and only after
+    // a scroll/resize, so pointermove never forces a layout
+    let rect = null;
+    let rectDirty = true;
+    let trx = REST_TILT;
+    let try_ = 0;
+    let crx = REST_TILT;
+    let cry = 0;
+
+    const clamp = (v, n) => (v < -n ? -n : v > n ? n : v);
+
+    const tick = () => {
+      if (havePointer) {
+        if (rectDirty || !rect) {
+          rect = wrap.getBoundingClientRect();
+          rectDirty = false;
+        }
+        const px = clamp((mx - (rect.left + rect.width / 2)) / (rect.width / 2), 1);
+        const py = clamp((my - (rect.top + rect.height / 2)) / (rect.height / 2), 1.4);
+        trx = REST_TILT - py * 7;
+        try_ = px * 5;
+      }
+
+      crx += (trx - crx) * 0.1;
+      cry += (try_ - cry) * 0.1;
+
+      const stage = stageRef.current;
+      if (stage) {
+        stage.style.transform = `rotateX(${crx.toFixed(2)}deg) rotateY(${cry.toFixed(2)}deg)`;
+      }
+
+      if (Math.abs(trx - crx) > 0.02 || Math.abs(try_ - cry) > 0.02) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        running = false;
+      }
+    };
+
+    const start = () => {
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    const onMove = (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      havePointer = true;
+      start();
+    };
+    const onLeave = () => {
+      havePointer = false;
+      trx = REST_TILT;
+      try_ = 0;
+      start();
+    };
+    const invalidate = () => {
+      rectDirty = true;
+    };
+
+    const listen = (on) => {
+      if (on === listening) return;
+      listening = on;
+      const fn = on ? "addEventListener" : "removeEventListener";
+      window[fn]("pointermove", onMove, { passive: true });
+      window[fn]("scroll", invalidate, { passive: true });
+      window[fn]("resize", invalidate);
+      document[fn]("pointerleave", onLeave);
+      if (on) rectDirty = true;
+      else onLeave();
+    };
+
+    // Nothing is wired up until the wordmark is actually on screen.
+    const io = new IntersectionObserver(
+      ([entry]) => listen(entry.isIntersecting),
+      { rootMargin: "120px" }
+    );
+    io.observe(wrap);
+
+    return () => {
+      io.disconnect();
+      listen(false);
+      cancelAnimationFrame(raf);
+    };
+  }, [reduceMotion]);
+
+  return (
+    <div aria-hidden className="select-none pointer-events-none overflow-hidden">
+      <div ref={wrapRef} className="glass-word translate-y-[22%]">
+        <div
+          ref={stageRef}
+          className="glass-word__stage font-display font-bold leading-none tracking-tight text-center text-[clamp(5rem,18vw,16rem)]"
+        >
+          {/* in flow — sets the box every other copy stacks into */}
+          <span className="glass-word__layer glass-word__depth">{WORD}</span>
+          <span className="glass-word__layer glass-word__over glass-word__face">{WORD}</span>
+          <span className="glass-word__layer glass-word__over glass-word__rim">{WORD}</span>
+          <span className="glass-word__layer glass-word__over glass-word__spec">{WORD}</span>
+          <span className="glass-word__glow" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Footer() {
   return (
@@ -76,11 +204,7 @@ export default function Footer() {
       </div>
 
       {/* Giant watermark */}
-      <div aria-hidden className="select-none pointer-events-none overflow-hidden">
-        <p className="text-outline font-display font-bold text-[clamp(5rem,18vw,16rem)] leading-none text-center tracking-tight translate-y-[22%]">
-          PAGIMOS
-        </p>
-      </div>
+      <GlassWordmark />
     </footer>
   );
 }

@@ -103,13 +103,13 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full pt-32 pb-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full pt-24 pb-14">
         {/* Intro chip */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-3 border border-line rounded-full pl-1.5 pr-5 py-1.5 mb-10 bg-surface/60"
+          className="inline-flex items-center gap-3 border border-line rounded-full pl-1.5 pr-5 py-1.5 mb-7 bg-surface/60"
         >
           <img
             src="/avatar.jpeg"
@@ -124,7 +124,9 @@ export default function Hero() {
         </motion.div>
 
         {/* Headline */}
-        <h1 className="font-display font-bold leading-[0.95] tracking-tight text-[clamp(3rem,9vw,7.5rem)]">
+        {/* Size tracks viewport HEIGHT as well as width, so the headline can
+            never push the CTAs below the fold on a short screen. */}
+        <h1 className="font-display font-bold leading-[0.95] tracking-tight text-[clamp(2.75rem,min(8vw,11.5vh),7rem)]">
           <span className="block overflow-hidden pb-1">
             <motion.span custom={0} variants={lineVariants} initial="hidden" animate="visible" className="block">
               I turn ideas into
@@ -148,7 +150,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.7 }}
-          className="mt-10 flex flex-col md:flex-row md:items-end justify-between gap-10"
+          className="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
           <p className="max-w-md text-fog text-lg leading-relaxed">
             Full stack developer shipping web, mobile, and desktop products end
@@ -178,7 +180,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.9 }}
-          className="mt-14 flex items-center gap-2"
+          className="mt-10 flex items-center gap-2"
         >
           <span className="font-mono text-xs text-fog mr-2">Find me on</span>
           {socials.map(({ id, href, icon: Icon, label }) => (

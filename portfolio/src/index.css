@@ -59,12 +59,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Outlined display text */
-.text-outline {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(244, 243, 238, 0.16);
-}
-
 /* Infinite marquee */
 @keyframes marquee {
   to {
@@ -90,6 +84,125 @@ body {
     black 88%,
     transparent
   );
+}
+
+/* ------------------------------------------------------------------
+   3D glass wordmark (footer)
+
+   Real CSS 3D: the stage is a preserve-3d container and each copy of the
+   word sits at a different translateZ, so tilting produces genuine
+   parallax between the extruded body, the glass face and the highlights.
+   Each layer is counter-scaled by (p - z) / p so the perspective
+   foreshortening doesn't make the stacked copies drift out of register.
+
+   Deliberately zero blur()/backdrop-filter: the only thing that changes
+   per frame is one transform on the stage, which stays on the compositor.
+   ------------------------------------------------------------------ */
+.glass-word {
+  /* long lens: the wordmark is ~137vw wide, so a short perspective would
+     warp the outer letters instead of reading as depth */
+  perspective: 1600px;
+  perspective-origin: 50% 45%;
+}
+
+.glass-word__stage {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(9deg) rotateY(0deg);
+}
+
+.glass-word__layer {
+  position: relative;
+  display: block;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* copies stacked on top of the in-flow one */
+.glass-word__over {
+  position: absolute;
+  inset: 0;
+}
+
+/* backlight that reads as light passing through the glass */
+.glass-word__glow {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 82%;
+  height: 80%;
+  transform: translate3d(-50%, -50%, -90px) scale(1.0563);
+  background:
+    radial-gradient(
+      ellipse 58% 50% at 40% 50%,
+      rgba(214, 242, 80, 0.32) 0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 52% 44% at 74% 55%,
+      rgba(94, 124, 255, 0.24) 0%,
+      transparent 70%
+    );
+}
+
+/* extruded body — gives the letters thickness under the glass */
+.glass-word__depth {
+  color: #0a0b0d;
+  transform: translateZ(-44px) scale(1.0275);
+  text-shadow:
+    0 1px 0 #101216, 0 2px 0 #0f1115, 0 3px 0 #0e1014, 0 4px 0 #0e1014,
+    0 5px 0 #0d0f13, 0 6px 0 #0d0f13, 0 7px 0 #0c0e12, 0 8px 0 #0c0e12,
+    0 9px 0 #0b0d10, 0 10px 0 #0b0d10, 0 11px 0 #0a0c0f, 0 12px 0 #0a0c0f,
+    0 13px 0 #090b0e, 0 14px 0 #090b0e, 0 16px 0 #08090c, 0 18px 0 #07080a,
+    0 24px 34px rgba(0, 0, 0, 0.72);
+}
+
+/* the glass face */
+.glass-word__face {
+  color: transparent;
+  background-image: linear-gradient(
+    158deg,
+    rgba(244, 243, 238, 0.5) 0%,
+    rgba(244, 243, 238, 0.07) 22%,
+    rgba(214, 242, 80, 0.42) 44%,
+    rgba(244, 243, 238, 0.05) 58%,
+    rgba(94, 124, 255, 0.3) 76%,
+    rgba(244, 243, 238, 0.46) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1.5px rgba(244, 243, 238, 0.32);
+}
+
+/* rim light catching the top edge */
+.glass-word__rim {
+  color: transparent;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.12) 14%,
+    transparent 34%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: translateZ(20px) scale(0.9875);
+  opacity: 0.72;
+}
+
+/* specular streak raking across the face */
+.glass-word__spec {
+  color: transparent;
+  background-image: linear-gradient(
+    108deg,
+    transparent 26%,
+    rgba(255, 255, 255, 0.72) 43%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 64%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: translateZ(40px) scale(0.975);
+  opacity: 0.5;
 }
 
 @media (prefers-reduced-motion: reduce) {
