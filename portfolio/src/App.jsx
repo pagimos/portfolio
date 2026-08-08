@@ -1,39 +1,39 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
-import Projects from "./components/Projects";
-import Stack from "./components/Stack";
-import Journal from "./components/Journal";
-import Footer from "./components/Footer";
+import Work from "./components/Work";
+import Services from "./components/Services";
+import Notes from "./components/Notes";
+import Contact from "./components/Contact";
+import usePointer from "./hooks/usePointer";
 
-function App() {
+export default function App() {
+  const pointer = usePointer();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
+    stiffness: 140,
+    damping: 32,
     restDelta: 0.001,
   });
 
   return (
-    <div className="grain min-h-screen bg-ink text-cream">
-      {/* Scroll progress */}
+    <div className="grid-bg min-h-screen bg-editor text-fg">
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-acid origin-left z-50"
+        className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-acid"
         style={{ scaleX: progress }}
       />
 
       <Nav />
-      <main>
-        <Hero />
-        <Marquee />
-        <Projects />
-        <Stack />
-        <Journal />
-      </main>
-      <Footer />
+
+      <div className="relative z-10 mx-auto max-w-page px-5 sm:px-8">
+        <main>
+          <Hero pointer={pointer} />
+          <Work />
+          <Services />
+          <Notes />
+        </main>
+        <Contact />
+      </div>
     </div>
   );
 }
-
-export default App;

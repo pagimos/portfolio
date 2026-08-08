@@ -1,200 +1,155 @@
-import { useEffect, useRef } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import { socials } from "../data";
 
-const lineVariants = {
-  hidden: { y: "110%" },
-  visible: (i) => ({
-    y: 0,
-    transition: { duration: 0.9, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
+// three + drei are ~240kb gzipped, keep them out of the first paint.
+const AsciiObject = lazy(() => import("./AsciiObject"));
 
-const SPOT = 600;
-
-function Spotlight() {
-  const reduceMotion = useReducedMotion();
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    // Skip entirely on touch / coarse pointers — nothing to follow there.
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-
-    const half = SPOT / 2;
-    let raf = 0;
-    let running = false;
-    // target vs. rendered position
-    let tx = -SPOT;
-    let ty = -SPOT;
-    let cx = -SPOT;
-    let cy = -SPOT;
-
-    const tick = () => {
-      cx += (tx - cx) * 0.22;
-      cy += (ty - cy) * 0.22;
-
-      const el = ref.current;
-      if (el) el.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-
-      if (Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        running = false; // settled — stop burning frames until the next move
-      }
-    };
-
-    const move = (e) => {
-      tx = e.clientX - half;
-      ty = e.clientY - half;
-      if (!running) {
-        running = true;
-        raf = requestAnimationFrame(tick);
-      }
-    };
-
-    window.addEventListener("pointermove", move, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", move);
-      cancelAnimationFrame(raf);
-    };
-  }, [reduceMotion]);
-
-  if (reduceMotion) return null;
-
+/** Static glyph field shown until WebGL is up, so the frame never flashes empty. */
+function AsciiFallback() {
+  const rows = [
+    "        .:-=+**+=-:.        ",
+    "     .-+*#%@@@@@%#*+-.      ",
+    "   .=*%@@@#*+==+*#@@@%*=.   ",
+    "  -#@@@*-.        .-*@@@#-  ",
+    " +@@@*.              .*@@@+ ",
+    "  -#@@@*-.        .-*@@@#-  ",
+    "   .=*%@@@#*+==+*#@@@%*=.   ",
+    "     .-+*#%@@@@@%#*+-.      ",
+    "        .:-=+**+=-:.        ",
+  ];
   return (
-    <div
-      ref={ref}
-      aria-hidden
-      className="pointer-events-none fixed top-0 left-0 z-0 h-[600px] w-[600px] rounded-full hidden md:block"
-      style={{
-        background:
-          "radial-gradient(circle, rgba(214,242,80,0.07) 0%, transparent 60%)",
-        transform: `translate3d(${-SPOT}px, ${-SPOT}px, 0)`,
-        willChange: "transform",
-        contain: "strict",
-      }}
-    />
+    <pre className="flex h-full items-center justify-center overflow-hidden font-mono text-[10px] leading-[1.15] text-acid/35">
+      {rows.join("\n")}
+    </pre>
   );
 }
 
-export default function Hero() {
+export default function Hero({ pointer }) {
+  const reduceMotion = useReducedMotion();
+  const stageRef = useRef(null);
+  const [inView, setInView] = useState(true);
+  const [mount3d, setMount3d] = useState(false);
+
+  useEffect(() => {
+    const id = window.requestIdleCallback
+      ? window.requestIdleCallback(() => setMount3d(true), { timeout: 1200 })
+      : setTimeout(() => setMount3d(true), 400);
+    return () => {
+      if (window.cancelIdleCallback) window.cancelIdleCallback(id);
+      else clearTimeout(id);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), {
+      rootMargin: "80px",
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section id="top" className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      <Spotlight />
+    <section
+      id="top"
+      className="relative flex min-h-[100svh] items-center pb-16 pt-28 lg:pt-24"
+    >
+      <div className="grid w-full grid-cols-1 items-center gap-y-12 lg:grid-cols-12 lg:gap-x-12">
+        {/* ------------------------------------------------ copy */}
+        <div className="lg:col-span-7">
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-line bg-panel px-3.5 py-1.5 font-mono text-[11px] text-dim"
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-acid opacity-70" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-acid" />
+            </span>
+            Available for new work
+          </motion.p>
 
-      {/* Static ambient glows — pure gradients, no blur() filter (filters force
-          an expensive re-composite every time the spotlight moves under them) */}
-      <div
-        aria-hidden
-        className="absolute -top-40 right-[-10%] h-[480px] w-[480px] rounded-full opacity-20"
-        style={{
-          background:
-            "radial-gradient(circle, #d6f250 0%, rgba(214,242,80,0.35) 35%, transparent 70%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-[-20%] left-[-15%] h-[520px] w-[520px] rounded-full opacity-10"
-        style={{
-          background:
-            "radial-gradient(circle, #5e7cff 0%, rgba(94,124,255,0.35) 35%, transparent 70%)",
-        }}
-      />
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-[15ch] font-sans text-[clamp(2.5rem,7vw,4.6rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-fg"
+          >
+            I build software that businesses{" "}
+            <span className="text-acid">run on</span>
+            <span className="text-orange">.</span>
+          </motion.h1>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full pt-24 pb-14">
-        {/* Intro chip */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.18 }}
+          >
+            <p className="mt-7 max-w-[54ch] font-sans text-[17px] leading-relaxed text-dim">
+              Full stack developer. Websites, web apps, and mobile products,
+              designed and built end to end by one person who stays on it until
+              it&apos;s live and working.
+            </p>
+
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <a
+                href="#work"
+                className="group inline-flex items-center gap-2 rounded-md bg-acid px-6 py-3.5 font-sans text-[15px] font-medium text-editor transition-colors hover:bg-acid/85"
+              >
+                See my work
+                <ArrowDown
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-y-0.5"
+                />
+              </a>
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2 rounded-md border border-line bg-panel px-6 py-3.5 font-sans text-[15px] font-medium text-fg transition-colors hover:border-line2"
+              >
+                Start a project
+                <ArrowUpRight
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ------------------------------------------------ ascii render */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-3 border border-line rounded-full pl-1.5 pr-5 py-1.5 mb-7 bg-surface/60"
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.25 }}
+          className="lg:col-span-5"
         >
-          <img
-            src="/avatar.jpeg"
-            alt="Pagimos"
-            width="36"
-            height="36"
-            className="h-9 w-9 rounded-full object-cover border border-line"
-          />
-          <span className="font-mono text-xs text-fog">
-            Hi, I&apos;m <span className="text-cream">Pagimos</span> · Full Stack Developer
-          </span>
-        </motion.div>
-
-        {/* Headline */}
-        {/* Size tracks viewport HEIGHT as well as width, so the headline can
-            never push the CTAs below the fold on a short screen. */}
-        <h1 className="font-display font-bold leading-[0.95] tracking-tight text-[clamp(2.75rem,min(8vw,11.5vh),7rem)]">
-          <span className="block overflow-hidden pb-1">
-            <motion.span custom={0} variants={lineVariants} initial="hidden" animate="visible" className="block">
-              I turn ideas into
-            </motion.span>
-          </span>
-          <span className="block overflow-hidden pb-1">
-            <motion.span custom={1} variants={lineVariants} initial="hidden" animate="visible" className="block">
-              <em className="font-serif italic font-normal text-acid">fast, </em>
-              polished
-            </motion.span>
-          </span>
-          <span className="block overflow-hidden pb-2">
-            <motion.span custom={2} variants={lineVariants} initial="hidden" animate="visible" className="block">
-              software<span className="text-acid">.</span>
-            </motion.span>
-          </span>
-        </h1>
-
-        {/* Sub + CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          className="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-8"
-        >
-          <p className="max-w-md text-fog text-lg leading-relaxed">
-            Full stack developer shipping web, mobile, and desktop products end
-            to end. Obsessed with the details that make software feel alive.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <a
-              href="#work"
-              className="group inline-flex items-center gap-2 bg-acid text-ink font-medium rounded-full px-6 py-3 hover:bg-acid-bright transition-colors"
+          <div className="rounded-lg border border-line bg-panel/60">
+            <div
+              ref={stageRef}
+              aria-hidden
+              className="h-[280px] sm:h-[340px] lg:h-[400px]"
             >
-              See my work
-              <ArrowDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
-            </a>
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 border border-line text-cream font-medium rounded-full px-6 py-3 hover:border-acid hover:text-acid transition-colors"
-            >
-              Get in touch
-              <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+              <Suspense fallback={<AsciiFallback />}>
+                {mount3d ? (
+                  <AsciiObject
+                    pointer={pointer}
+                    active={inView}
+                    animate={!reduceMotion}
+                  />
+                ) : (
+                  <AsciiFallback />
+                )}
+              </Suspense>
+            </div>
+
+            <p className="border-t border-line px-4 py-2.5 font-mono text-[11px] text-comment">
+              <span className="text-acid">{"//"}</span> 3D, drawn with text
+              characters. Move your cursor.
+            </p>
           </div>
-        </motion.div>
-
-        {/* Socials */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className="mt-10 flex items-center gap-2"
-        >
-          <span className="font-mono text-xs text-fog mr-2">Find me on</span>
-          {socials.map(({ id, href, icon: Icon, label }) => (
-            <a
-              key={id}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="p-2.5 rounded-full border border-line text-fog hover:text-ink hover:bg-acid hover:border-acid transition-colors"
-            >
-              <Icon size={16} />
-            </a>
-          ))}
         </motion.div>
       </div>
     </section>

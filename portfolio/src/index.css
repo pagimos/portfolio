@@ -3,213 +3,141 @@
 @tailwind utilities;
 
 :root {
-  --ink: #070708;
-  --acid: #d6f250;
-  --cream: #f4f3ee;
+  --editor: #0b0d11;
+  --acid: #4ade80;
+  --line: #1b212b;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--editor);
 }
 
 body {
-  background-color: var(--ink);
-  color: var(--cream);
-  font-family: "Space Grotesk", system-ui, sans-serif;
+  background-color: var(--editor);
+  color: #c7d0dd;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--acid);
-  color: var(--ink);
+  background: rgba(74, 222, 128, 0.26);
+  color: #eaf2ea;
 }
 
-/* Slim custom scrollbar */
+/* Editor-style scrollbar: thin, no track chrome */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 11px;
+  height: 11px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--ink);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #26272b;
-  border-radius: 8px;
-  border: 2px solid var(--ink);
+  background: #232b36;
+  border: 3px solid var(--editor);
+  border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3b40;
+  background: #333d4c;
 }
 
-/* Film grain overlay.
-   Kept to exactly one viewport (it was 200% x 200% = 4x the pixels to raster)
-   and promoted to its own compositor layer, so the moving spotlight beneath it
-   never forces the noise texture to repaint. */
-.grain::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0.05;
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+:focus-visible {
+  outline: 1px solid var(--acid);
+  outline-offset: 2px;
 }
 
-/* Infinite marquee */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
+@layer components {
+  /* A code line: hover lights the row the way an editor highlights the
+     caret line, and the gutter number brightens with it. */
+  .code-row {
+    display: flex;
+    align-items: flex-start;
+  }
+  .code-row > .gutter {
+    flex: none;
+    width: 3.25rem;
+    padding-right: 1rem;
+    text-align: right;
+    color: #3f4854;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
   }
 }
-.animate-marquee {
-  animation: marquee 36s linear infinite;
+
+@layer utilities {
+  /* Blueprint grid, one fixed layer so scrolling never repaints it */
+  .grid-bg::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(199, 208, 221, 0.028) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(199, 208, 221, 0.028) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 78%);
+  }
+
+  .caret::after {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 0.15em;
+    background: var(--acid);
+    vertical-align: text-bottom;
+    animation: blink 1.15s steps(1) infinite;
+  }
+
+  /* The AsciiEffect writes into a <table> and hard-codes Courier New.
+     JetBrains Mono shares the same 600/1000 advance width, so swapping the
+     family keeps the character grid square while matching the site's face. */
+  .ascii-stage table {
+    font-family: "JetBrains Mono", ui-monospace, monospace !important;
+    font-weight: 500;
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Infinite marquee for the status ticker */
+@keyframes slide {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.animate-slide {
+  animation: slide 44s linear infinite;
   will-change: transform;
-}
-.marquee-mask {
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 12%,
-    black 88%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 12%,
-    black 88%,
-    transparent
-  );
-}
-
-/* ------------------------------------------------------------------
-   3D glass wordmark (footer)
-
-   Real CSS 3D: the stage is a preserve-3d container and each copy of the
-   word sits at a different translateZ, so tilting produces genuine
-   parallax between the extruded body, the glass face and the highlights.
-   Each layer is counter-scaled by (p - z) / p so the perspective
-   foreshortening doesn't make the stacked copies drift out of register.
-
-   Deliberately zero blur()/backdrop-filter: the only thing that changes
-   per frame is one transform on the stage, which stays on the compositor.
-   ------------------------------------------------------------------ */
-.glass-word {
-  /* long lens: the wordmark is ~137vw wide, so a short perspective would
-     warp the outer letters instead of reading as depth */
-  perspective: 1600px;
-  perspective-origin: 50% 45%;
-}
-
-.glass-word__stage {
-  position: relative;
-  transform-style: preserve-3d;
-  transform: rotateX(9deg) rotateY(0deg);
-}
-
-.glass-word__layer {
-  position: relative;
-  display: block;
-  margin: 0;
-  white-space: nowrap;
-}
-
-/* copies stacked on top of the in-flow one */
-.glass-word__over {
-  position: absolute;
-  inset: 0;
-}
-
-/* backlight that reads as light passing through the glass */
-.glass-word__glow {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  width: 82%;
-  height: 80%;
-  transform: translate3d(-50%, -50%, -90px) scale(1.0563);
-  background:
-    radial-gradient(
-      ellipse 58% 50% at 40% 50%,
-      rgba(214, 242, 80, 0.32) 0%,
-      transparent 68%
-    ),
-    radial-gradient(
-      ellipse 52% 44% at 74% 55%,
-      rgba(94, 124, 255, 0.24) 0%,
-      transparent 70%
-    );
-}
-
-/* extruded body — gives the letters thickness under the glass */
-.glass-word__depth {
-  color: #0a0b0d;
-  transform: translateZ(-44px) scale(1.0275);
-  text-shadow:
-    0 1px 0 #101216, 0 2px 0 #0f1115, 0 3px 0 #0e1014, 0 4px 0 #0e1014,
-    0 5px 0 #0d0f13, 0 6px 0 #0d0f13, 0 7px 0 #0c0e12, 0 8px 0 #0c0e12,
-    0 9px 0 #0b0d10, 0 10px 0 #0b0d10, 0 11px 0 #0a0c0f, 0 12px 0 #0a0c0f,
-    0 13px 0 #090b0e, 0 14px 0 #090b0e, 0 16px 0 #08090c, 0 18px 0 #07080a,
-    0 24px 34px rgba(0, 0, 0, 0.72);
-}
-
-/* the glass face */
-.glass-word__face {
-  color: transparent;
-  background-image: linear-gradient(
-    158deg,
-    rgba(244, 243, 238, 0.5) 0%,
-    rgba(244, 243, 238, 0.07) 22%,
-    rgba(214, 242, 80, 0.42) 44%,
-    rgba(244, 243, 238, 0.05) 58%,
-    rgba(94, 124, 255, 0.3) 76%,
-    rgba(244, 243, 238, 0.46) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-stroke: 1.5px rgba(244, 243, 238, 0.32);
-}
-
-/* rim light catching the top edge */
-.glass-word__rim {
-  color: transparent;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.12) 14%,
-    transparent 34%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  transform: translateZ(20px) scale(0.9875);
-  opacity: 0.72;
-}
-
-/* specular streak raking across the face */
-.glass-word__spec {
-  color: transparent;
-  background-image: linear-gradient(
-    108deg,
-    transparent 26%,
-    rgba(255, 255, 255, 0.72) 43%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 64%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  transform: translateZ(40px) scale(0.975);
-  opacity: 0.5;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .animate-marquee {
+  .animate-slide {
+    animation: none;
+  }
+  .caret::after {
     animation: none;
   }
 }

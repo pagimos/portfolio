@@ -1,133 +1,168 @@
 import { Github, Linkedin, Instagram, Twitter } from "lucide-react";
 
-export const socials = [
-  { id: "github", label: "GitHub", href: "https://github.com/pagimos", icon: Github, handle: "@pagimos" },
-  { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/pagimos/", icon: Linkedin, handle: "in/pagimos" },
-  { id: "twitter", label: "X / Twitter", href: "https://twitter.com/pagimos", icon: Twitter, handle: "@pagimos" },
-  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/pagimos/", icon: Instagram, handle: "@pagimos" },
+export const nav = [
+  { id: "work", label: "Work" },
+  { id: "services", label: "Services" },
+  { id: "notes", label: "Notes" },
 ];
 
+export const socials = [
+  {
+    id: "github",
+    label: "GitHub",
+    href: "https://github.com/pagimos",
+    icon: Github,
+    handle: "@pagimos",
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/pagimos/",
+    icon: Linkedin,
+    handle: "in/pagimos",
+  },
+  {
+    id: "twitter",
+    label: "X / Twitter",
+    href: "https://twitter.com/pagimos",
+    icon: Twitter,
+    handle: "@pagimos",
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/pagimos/",
+    icon: Instagram,
+    handle: "@pagimos",
+  },
+];
+
+/** `note` renders as a small qualifier chip next to the project name. */
 export const projects = [
   {
-    href: "https://estifham.vercel.app/",
-    imageSrc: "/wlogo.svg",
-    title: "Estifham",
-    kind: "Trivia Platform",
-    description:
-      "An interactive trivia platform with 200+ questions across 20 categories. Built for speed, designed for fun.",
-    tags: ["React", "Tailwind", "Vercel"],
+    slug: "redcore",
+    name: "RedCore",
+    host: "redcore.ac",
+    href: "https://www.redcore.ac/",
+    kind: "Security platform",
+    year: "2026",
+    accent: "#FF6B6B",
+    summary:
+      "A verification service for game server owners. It scans a player's PC and reports whether cheat software, wiped logs, or hidden second accounts turned up, so admins can decide who gets in with actual evidence.",
+    stack: ["React", "Node", "Subscriptions"],
   },
   {
+    slug: "stockivia",
+    name: "Stockivia",
+    host: "stockivia.com",
     href: "https://www.stockivia.com",
-    imageSrc: "/STOCKIVIA.png",
-    title: "Stockivia",
-    kind: "SaaS · Inventory",
-    description:
-      "Inventory and sales management for real businesses. Stock, invoices, and analytics in one clean dashboard.",
-    tags: ["React", "Node.js", "PostgreSQL"],
+    kind: "Business software",
+    year: "2025",
+    accent: "#4ADE80",
+    summary:
+      "Stock and sales management for small businesses. Track what you have, invoice customers, and see what's actually selling, all from one dashboard instead of three spreadsheets.",
+    stack: ["React", "Node", "PostgreSQL"],
   },
   {
-    href: "https://www.instagram.com/digital.bitwave",
-    imageSrc: "/dbitwave.png",
-    title: "Digital Bitwave",
-    kind: "Digital Agency",
-    description:
-      "A digital firm delivering website development, marketing, and design services that grow real brands.",
-    tags: ["Branding", "Web", "Marketing"],
+    slug: "smia",
+    name: "SMIA Ascenseurs",
+    host: "smiaascenseurs.com",
+    href: "https://www.smiaascenseurs.com/",
+    kind: "Company website",
+    year: "2026",
+    accent: "#7AA2F7",
+    summary:
+      "A French language site for an elevator company in Oran. Installation, modernisation, repairs and maintenance contracts, organised so a building manager with a stuck lift finds the emergency line immediately.",
+    stack: ["React", "SEO", "French"],
   },
   {
-    href: "https://www.intelculator.com",
-    imageSrc: "/intelculator.png",
-    title: "Intelculator",
-    kind: "Web App · IQ Testing",
-    description:
-      "An IQ calculator delivering accurate results through interactive intelligence tests and instant scoring.",
-    tags: ["React", "Analytics", "UX"],
+    slug: "djawahirsoft",
+    name: "DjawahirSoft",
+    host: "djawahirsoft.vercel.app",
+    href: "https://djawahirsoft.vercel.app/",
+    kind: "Product website",
+    year: "2026",
+    accent: "#FFA657",
+    note: "Concept pitch",
+    summary:
+      "A concept site I designed and built on my own initiative, then showed to the owner. It presents their business management software: quotes, invoicing, stock and finances, in a way that explains the product in one scroll.",
+    stack: ["React", "Tailwind", "Spec work"],
+  },
+  {
+    slug: "estifham",
+    name: "Estifham",
+    host: "estifham.vercel.app",
+    href: "https://estifham.vercel.app/",
+    kind: "Web app",
+    year: "2025",
+    accent: "#BB9AF7",
+    summary:
+      "A trivia platform with over 200 questions across 20 categories. Built to feel instant on a phone, with rounds short enough to play while waiting for coffee.",
+    stack: ["React", "Tailwind", "Vercel"],
   },
 ];
 
-export const posts = [
+export const services = [
   {
-    href: "#",
-    title: "Agentic coding is eating the software lifecycle",
-    date: "Jun 2026",
-    readTime: "6 min",
-    tag: "AI",
-    content:
-      "AI agents no longer autocomplete lines, they take whole tickets. Plan, implement, test, open the PR, and ping you for review. Here is how I restructured my workflow around agents, and the parts that still need a human.",
+    id: "01",
+    title: "Web apps & dashboards",
+    body: "The software your business runs on. Accounts, payments, data, reporting, and an interface your team won't need training to use.",
   },
   {
-    href: "#",
-    title: "MCP won. Here is what to build now",
-    date: "May 2026",
-    readTime: "5 min",
-    tag: "Tooling",
-    content:
-      "The Model Context Protocol quietly became the USB-C of AI integrations. Every serious tool ships an MCP server, so the interesting work has moved from wiring things together to designing servers agents actually use well.",
+    id: "02",
+    title: "Websites that convert",
+    body: "Fast, well-built sites that load instantly, show up on Google, and make a company look as serious as it actually is.",
   },
   {
-    href: "#",
-    title: "Small models, big deal: shipping on-device LLMs",
-    date: "Apr 2026",
-    readTime: "7 min",
-    tag: "Edge AI",
-    content:
-      "Sub-4B models are finally good enough for real product features. No API bill, no latency spikes, no data leaving the device. What I learned putting a local model inside a production desktop app.",
+    id: "03",
+    title: "Mobile & desktop apps",
+    body: "One product across phone, tablet and desktop, sharing a single codebase so features land everywhere instead of one platform at a time.",
   },
   {
-    href: "#",
-    title: "React in 2026: the compiler changed how I write components",
-    date: "Mar 2026",
-    readTime: "5 min",
-    tag: "Frontend",
-    content:
-      "With the React Compiler handling memoization, most of my useMemo and useCallback calls are gone. Components got simpler and faster at the same time, and Server Components finally feel like the default, not the experiment.",
-  },
-  {
-    href: "#",
-    title: "Prompt injection is the new SQL injection",
-    date: "Feb 2026",
-    readTime: "8 min",
-    tag: "Security",
-    content:
-      "Once agents can read your mail, touch your code, and spend your money, every untrusted string becomes a potential exploit. Decades of injection lessons apply directly to LLM apps, and most teams are ignoring them.",
+    id: "04",
+    title: "AI features",
+    body: "Assistants, smart search, and automation added to products that shipped without them, wired in where they genuinely save time.",
   },
 ];
 
-export const stackGroups = [
-  {
-    title: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "HTML/CSS"],
-  },
-  {
-    title: "Backend",
-    items: ["Node.js", "Express", "Python", "Django", "REST APIs", "GraphQL"],
-  },
-  {
-    title: "Database",
-    items: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "Firebase", "Supabase"],
-  },
-  {
-    title: "Mobile & DevOps",
-    items: ["React Native", "Docker", "AWS", "Git", "CI/CD", "UX/UI Design"],
-  },
-];
-
-export const currently = ["LLM agents", "MCP servers", "RAG pipelines", "Local models", "Prompt security"];
-
-export const marqueeItems = [
+export const stack = [
   "React",
-  "TypeScript",
   "Next.js",
-  "Node.js",
+  "TypeScript",
+  "Node",
   "Python",
   "React Native",
   "PostgreSQL",
   "MongoDB",
   "Redis",
+  "Supabase",
   "Docker",
   "AWS",
-  "Tailwind CSS",
-  "GraphQL",
-  "Supabase",
+  "Vercel",
+  "Tailwind",
+  "Three.js",
+];
+
+export const notes = [
+  {
+    title: "AI agents are changing how software gets built",
+    date: "Jun 2026",
+    read: "6 min",
+    tag: "AI",
+    body: "Agents no longer just autocomplete code, they take whole tasks from start to finish. Here's how I restructured my process around them, and the parts that still need a human making the call.",
+  },
+  {
+    title: "Why most dashboards go unused",
+    date: "May 2026",
+    read: "5 min",
+    tag: "Product",
+    body: "Teams ask for charts and then never open them. The dashboards that survive answer one question the person already had that morning, instead of showing everything the database knows.",
+  },
+  {
+    title: "Fast websites are a business decision",
+    date: "Feb 2026",
+    read: "4 min",
+    tag: "Performance",
+    body: "Every extra second of load time costs you visitors before they see a single word. Speed isn't a technical nicety, it's the cheapest conversion work available.",
+  },
 ];

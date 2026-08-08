@@ -4,21 +4,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#070708",
-        surface: "#0e0f11",
-        line: "rgba(244, 243, 238, 0.09)",
-        cream: "#f4f3ee",
-        fog: "#8f9089",
-        acid: {
-          DEFAULT: "#d6f250",
-          bright: "#e4ff5e",
-          dim: "#9db33a",
-        },
+        // editor surfaces, darkest to lightest
+        abyss: "#07080A",
+        editor: "#0B0D11",
+        panel: "#10141A",
+        elev: "#161B23",
+        line: "#1B212B",
+        line2: "#2A323F",
+        // text
+        fg: "#C7D0DD",
+        dim: "#8892A4",
+        comment: "#55606F",
+        // syntax palette, doubles as the whole accent system
+        acid: "#4ADE80",
+        blue: "#7AA2F7",
+        purple: "#BB9AF7",
+        orange: "#FFA657",
+        rose: "#FF7B72",
       },
       fontFamily: {
-        display: ['"Space Grotesk"', "system-ui", "sans-serif"],
-        serif: ['"Instrument Serif"', "Georgia", "serif"],
         mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+        sans: ['"Inter Tight"', "system-ui", "sans-serif"],
+      },
+      maxWidth: {
+        page: "82rem",
+      },
+      transitionTimingFunction: {
+        out: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },
