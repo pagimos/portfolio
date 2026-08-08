@@ -8,18 +8,14 @@ const AsciiObject = lazy(() => import("./AsciiObject"));
 /** Static glyph field shown until WebGL is up, so the frame never flashes empty. */
 function AsciiFallback() {
   const rows = [
-    "        .:-=+**+=-:.        ",
-    "     .-+*#%@@@@@%#*+-.      ",
-    "   .=*%@@@#*+==+*#@@@%*=.   ",
-    "  -#@@@*-.        .-*@@@#-  ",
-    " +@@@*.              .*@@@+ ",
-    "  -#@@@*-.        .-*@@@#-  ",
-    "   .=*%@@@#*+==+*#@@@%*=.   ",
-    "     .-+*#%@@@@@%#*+-.      ",
-    "        .:-=+**+=-:.        ",
+    "#####    ###    ####  ###  #   #  ###   ####",
+    "#    #  #   #  #       #   ## ##  #  #  #   ",
+    "#####   #####  #  ##   #   # # #  #  #   ## ",
+    "#       #   #  #   #   #   #   #  #  #     #",
+    "#       #   #   ###   ###  #   #  ###   #### ",
   ];
   return (
-    <pre className="flex h-full items-center justify-center overflow-hidden font-mono text-[10px] leading-[1.15] text-acid/35">
+    <pre className="flex h-full items-center justify-center overflow-hidden font-mono text-[9px] leading-[1.25] text-acid/30 sm:text-[11px]">
       {rows.join("\n")}
     </pre>
   );
