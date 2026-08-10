@@ -31,9 +31,9 @@ export const socials = [
   {
     id: "instagram",
     label: "Instagram",
-    href: "https://www.instagram.com/pagimos/",
+    href: "https://www.instagram.com/pagim0s/",
     icon: Instagram,
-    handle: "@pagimos",
+    handle: "@pagim0s",
   },
 ];
 
