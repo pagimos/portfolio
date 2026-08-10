@@ -37,13 +37,18 @@ export const socials = [
   },
 ];
 
-/** `note` renders as a small qualifier chip next to the project name. */
+/**
+ * `note` renders as a small qualifier chip next to the project name.
+ * `image` is a live screenshot of the site, captured at 1200×750 into
+ * public/projects/ — the card preview leads with it.
+ */
 export const projects = [
   {
     slug: "redcore",
     name: "RedCore",
     host: "redcore.ac",
     href: "https://www.redcore.ac/",
+    image: "/projects/redcore.webp",
     kind: "Security platform",
     year: "2026",
     accent: "#FF6B6B",
@@ -52,12 +57,26 @@ export const projects = [
     stack: ["React", "Node", "Subscriptions"],
   },
   {
+    slug: "loupgarou",
+    name: "The Village",
+    host: "loupgarou.io",
+    href: "https://loupgarou.io/",
+    image: "/projects/loupgarou.webp",
+    kind: "Multiplayer game",
+    year: "2026",
+    accent: "#818CF8",
+    summary:
+      "Werewolf played online with friends. Up to 16 players get one of 20 roles, then argue their way through night and day rounds around a 3D campfire. Create a room, share the code, and everyone is in without installing anything.",
+    stack: ["React", "WebSockets", "Three.js"],
+  },
+  {
     slug: "stockivia",
     name: "Stockivia",
     host: "stockivia.com",
     href: "https://www.stockivia.com",
+    image: "/projects/stockivia.webp",
     kind: "Business software",
-    year: "2025",
+    year: "2023",
     accent: "#4ADE80",
     summary:
       "Stock and sales management for small businesses. Track what you have, invoice customers, and see what's actually selling, all from one dashboard instead of three spreadsheets.",
@@ -68,6 +87,7 @@ export const projects = [
     name: "SMIA Ascenseurs",
     host: "smiaascenseurs.com",
     href: "https://www.smiaascenseurs.com/",
+    image: "/projects/smia.webp",
     kind: "Company website",
     year: "2026",
     accent: "#7AA2F7",
@@ -80,6 +100,7 @@ export const projects = [
     name: "DjawahirSoft",
     host: "djawahirsoft.vercel.app",
     href: "https://djawahirsoft.vercel.app/",
+    image: "/projects/djawahirsoft.webp",
     kind: "Product website",
     year: "2026",
     accent: "#FFA657",
@@ -93,6 +114,7 @@ export const projects = [
     name: "Estifham",
     host: "estifham.vercel.app",
     href: "https://estifham.vercel.app/",
+    image: "/projects/estifham.webp",
     kind: "Web app",
     year: "2025",
     accent: "#BB9AF7",
