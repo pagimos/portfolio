@@ -70,19 +70,6 @@ export const projects = [
     stack: ["React", "WebSockets", "Three.js"],
   },
   {
-    slug: "stockivia",
-    name: "Stockivia",
-    host: "stockivia.com",
-    href: "https://www.stockivia.com",
-    image: "/projects/stockivia.webp",
-    kind: "Business software",
-    year: "2023",
-    accent: "#4ADE80",
-    summary:
-      "Stock and sales management for small businesses. Track what you have, invoice customers, and see what's actually selling, all from one dashboard instead of three spreadsheets.",
-    stack: ["React", "Node", "PostgreSQL"],
-  },
-  {
     slug: "smia",
     name: "SMIA Ascenseurs",
     host: "smiaascenseurs.com",
@@ -121,6 +108,19 @@ export const projects = [
     summary:
       "A trivia platform with over 200 questions across 20 categories. Built to feel instant on a phone, with rounds short enough to play while waiting for coffee.",
     stack: ["React", "Tailwind", "Vercel"],
+  },
+  {
+    slug: "stockivia",
+    name: "Stockivia",
+    host: "stockivia.com",
+    href: "https://www.stockivia.com",
+    image: "/projects/stockivia.webp",
+    kind: "Business software",
+    year: "2023",
+    accent: "#4ADE80",
+    summary:
+      "Stock and sales management for small businesses. Track what you have, invoice customers, and see what's actually selling, all from one dashboard instead of three spreadsheets.",
+    stack: ["React", "Node", "PostgreSQL"],
   },
 ];
 
