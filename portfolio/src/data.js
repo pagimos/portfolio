@@ -73,7 +73,7 @@ export const projects = [
     slug: "smia",
     name: "SMIA Ascenseurs",
     host: "smiaascenseurs.com",
-    href: "https://www.smiaascenseurs.com/",
+    href: "https://assenceur-website-inky.vercel.app/",
     image: "/projects/smia.webp",
     kind: "Company website",
     year: "2026",
@@ -85,8 +85,8 @@ export const projects = [
   {
     slug: "djawahirsoft",
     name: "DjawahirSoft",
-    host: "djawahirsoft.vercel.app",
-    href: "https://djawahirsoft.vercel.app/",
+    host: "djawahirsoft-navy.vercel.app",
+    href: "https://djawahirsoft-navy.vercel.app/",
     image: "/projects/djawahirsoft.webp",
     kind: "Product website",
     year: "2026",
@@ -99,8 +99,8 @@ export const projects = [
   {
     slug: "estifham",
     name: "Estifham",
-    host: "estifham.vercel.app",
-    href: "https://estifham.vercel.app/",
+    host: "estifham-gamma.vercel.app",
+    href: "https://estifham-gamma.vercel.app/",
     image: "/projects/estifham.webp",
     kind: "Web app",
     year: "2025",
@@ -113,7 +113,7 @@ export const projects = [
     slug: "stockivia",
     name: "Stockivia",
     host: "stockivia.com",
-    href: "https://www.stockivia.com",
+    href: "https://stockivia-seven.vercel.app/",
     image: "/projects/stockivia.webp",
     kind: "Business software",
     year: "2023",
@@ -121,6 +121,19 @@ export const projects = [
     summary:
       "Stock and sales management for small businesses. Track what you have, invoice customers, and see what's actually selling, all from one dashboard instead of three spreadsheets.",
     stack: ["React", "Node", "PostgreSQL"],
+  },
+  {
+    slug: "pagi-development",
+    name: "Pagi Development",
+    host: "pagi-developement.tebex.io",
+    href: "https://pagi-developement.tebex.io/",
+    image: "/projects/pagi-development.webp",
+    kind: "Script store",
+    year: "2026",
+    accent: "#22D3EE",
+    summary:
+      "My own storefront for FiveM server scripts. Optimized resources for ESX, QBCore and ox_lib, sold with instant delivery, lifetime updates and support on Discord, running on over 500 servers.",
+    stack: ["Tebex", "Lua", "FiveM"],
   },
 ];
 
