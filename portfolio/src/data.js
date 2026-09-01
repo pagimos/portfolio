@@ -72,8 +72,8 @@ export const projects = [
   {
     slug: "smia",
     name: "SMIA Ascenseurs",
-    host: "smiaascenseurs.com",
-    href: "https://assenceur-website-inky.vercel.app/",
+    host: "smiaascenseurs.vercel.app",
+    href: "https://smiaascenseurs.vercel.app/",
     image: "/projects/smia.webp",
     kind: "Company website",
     year: "2026",
@@ -85,8 +85,8 @@ export const projects = [
   {
     slug: "djawahirsoft",
     name: "DjawahirSoft",
-    host: "djawahirsoft-navy.vercel.app",
-    href: "https://djawahirsoft-navy.vercel.app/",
+    host: "djawahirsoft-site.vercel.app",
+    href: "https://djawahirsoft-site.vercel.app/",
     image: "/projects/djawahirsoft.webp",
     kind: "Product website",
     year: "2026",
@@ -99,8 +99,8 @@ export const projects = [
   {
     slug: "estifham",
     name: "Estifham",
-    host: "estifham-gamma.vercel.app",
-    href: "https://estifham-gamma.vercel.app/",
+    host: "estifham-app.vercel.app",
+    href: "https://estifham-app.vercel.app/",
     image: "/projects/estifham.webp",
     kind: "Web app",
     year: "2025",
@@ -112,8 +112,8 @@ export const projects = [
   {
     slug: "stockivia",
     name: "Stockivia",
-    host: "stockivia.com",
-    href: "https://stockivia-seven.vercel.app/",
+    host: "stockivia-app.vercel.app",
+    href: "https://stockivia-app.vercel.app/",
     image: "/projects/stockivia.webp",
     kind: "Business software",
     year: "2023",
