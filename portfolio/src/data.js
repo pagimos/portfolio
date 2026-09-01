@@ -135,6 +135,20 @@ export const projects = [
       "My own storefront for FiveM server scripts. Optimized resources for ESX, QBCore and ox_lib, sold with instant delivery, lifetime updates and support on Discord, running on over 500 servers.",
     stack: ["Tebex", "Lua", "FiveM"],
   },
+  {
+    slug: "packers-dz",
+    name: "Packers DZ",
+    host: "packers-dz.vercel.app",
+    href: "https://packers-dz.vercel.app/",
+    image: "/projects/packers-dz.webp",
+    kind: "Logistics website",
+    year: "2026",
+    accent: "#F5A524",
+    note: "Redesign concept",
+    summary:
+      "A redesign for an Algerian parcel carrier, written Arabic first with the whole layout mirrored for RTL and a full English translation behind one toggle. A 3D map of the 58 wilayas doubles as the input for a live shipping estimator, so picking a province on the map prices the delivery.",
+    stack: ["Next.js", "Three.js", "Arabic RTL"],
+  },
 ];
 
 export const services = [
