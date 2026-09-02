@@ -97,13 +97,27 @@ export const projects = [
     stack: ["React", "Tailwind", "Spec work"],
   },
   {
+    slug: "packers-dz",
+    name: "Packers DZ",
+    host: "packers-dz.vercel.app",
+    href: "https://packers-dz.vercel.app/",
+    image: "/projects/packers-dz.webp",
+    kind: "Logistics website",
+    year: "2026",
+    accent: "#F5A524",
+    note: "Redesign concept",
+    summary:
+      "A redesign for an Algerian parcel carrier, written Arabic first with the whole layout mirrored for RTL and a full English translation behind one toggle. A 3D map of the 58 wilayas doubles as the input for a live shipping estimator, so picking a province on the map prices the delivery.",
+    stack: ["Next.js", "Three.js", "Arabic RTL"],
+  },
+  {
     slug: "estifham",
     name: "Estifham",
     host: "estifham-app.vercel.app",
     href: "https://estifham-app.vercel.app/",
     image: "/projects/estifham.webp",
     kind: "Web app",
-    year: "2025",
+    year: "2024",
     accent: "#BB9AF7",
     summary:
       "A trivia platform with over 200 questions across 20 categories. Built to feel instant on a phone, with rounds short enough to play while waiting for coffee.",
@@ -134,20 +148,6 @@ export const projects = [
     summary:
       "My own storefront for FiveM server scripts. Optimized resources for ESX, QBCore and ox_lib, sold with instant delivery, lifetime updates and support on Discord, running on over 500 servers.",
     stack: ["Tebex", "Lua", "FiveM"],
-  },
-  {
-    slug: "packers-dz",
-    name: "Packers DZ",
-    host: "packers-dz.vercel.app",
-    href: "https://packers-dz.vercel.app/",
-    image: "/projects/packers-dz.webp",
-    kind: "Logistics website",
-    year: "2026",
-    accent: "#F5A524",
-    note: "Redesign concept",
-    summary:
-      "A redesign for an Algerian parcel carrier, written Arabic first with the whole layout mirrored for RTL and a full English translation behind one toggle. A 3D map of the 58 wilayas doubles as the input for a live shipping estimator, so picking a province on the map prices the delivery.",
-    stack: ["Next.js", "Three.js", "Arabic RTL"],
   },
 ];
 
