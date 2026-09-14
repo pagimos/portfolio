@@ -65,6 +65,7 @@ export const projects = [
     kind: "Multiplayer game",
     year: "2026",
     accent: "#818CF8",
+    note: "In development",
     summary:
       "Werewolf played online with friends. Up to 16 players get one of 20 roles, then argue their way through night and day rounds around a 3D campfire. Create a room, share the code, and everyone is in without installing anything.",
     stack: ["React", "WebSockets", "Three.js"],
