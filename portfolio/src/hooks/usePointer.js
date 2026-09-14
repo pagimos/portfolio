@@ -1,12 +1,15 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Window-wide pointer in normalised device coords, kept in a ref so moving
- * the mouse never triggers a React render. The 3D scene reads it inside
- * useFrame.
+ * Window-wide pointer, kept in a ref so moving the mouse never triggers a
+ * React render. The 3D scene reads it inside useFrame.
+ *
+ * x/y are normalised device coords across the window (-1..1); cx/cy are the
+ * raw client pixels, for callers that need to map the cursor onto their own
+ * element.
  */
 export default function usePointer() {
-  const pointer = useRef({ x: 0, y: 0, active: false });
+  const pointer = useRef({ x: 0, y: 0, cx: 0, cy: 0, active: false });
 
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return;
@@ -15,6 +18,8 @@ export default function usePointer() {
       pointer.current = {
         x: (e.clientX / window.innerWidth) * 2 - 1,
         y: -((e.clientY / window.innerHeight) * 2 - 1),
+        cx: e.clientX,
+        cy: e.clientY,
         active: true,
       };
     };

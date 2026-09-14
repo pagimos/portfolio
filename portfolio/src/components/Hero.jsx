@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 // three + drei are ~240kb gzipped, keep them out of the first paint.
@@ -22,7 +22,6 @@ function AsciiFallback() {
 }
 
 export default function Hero({ pointer }) {
-  const reduceMotion = useReducedMotion();
   const stageRef = useRef(null);
   const [inView, setInView] = useState(true);
   const [mount3d, setMount3d] = useState(false);
@@ -130,11 +129,7 @@ export default function Hero({ pointer }) {
             >
               <Suspense fallback={<AsciiFallback />}>
                 {mount3d ? (
-                  <AsciiObject
-                    pointer={pointer}
-                    active={inView}
-                    animate={!reduceMotion}
-                  />
+                  <AsciiObject pointer={pointer} active={inView} />
                 ) : (
                   <AsciiFallback />
                 )}
