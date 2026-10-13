@@ -150,6 +150,19 @@ export const projects = [
       "My own storefront for FiveM server scripts. Optimized resources for ESX, QBCore and ox_lib, sold with instant delivery, lifetime updates and support on Discord, running on over 500 servers.",
     stack: ["Tebex", "Lua", "FiveM"],
   },
+  {
+    slug: "pagi-labz",
+    name: "Pagi Labz",
+    host: "pagilabz.com",
+    href: "https://pagilabz.com/",
+    image: "/projects/pagi-labz.webp",
+    kind: "Web store",
+    year: "2026",
+    accent: "#8F6BFF",
+    summary:
+      "My FiveM studio's own store for scripts, MLO interiors, tools, video and design. A custom front end on the Tebex Headless API, so buyers fill a cart and pay without leaving the site, and every resource lands straight in their Cfx.re account.",
+    stack: ["Next.js", "Tebex Headless", "Three.js"],
+  },
 ];
 
 export const services = [
