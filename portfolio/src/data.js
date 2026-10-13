@@ -127,8 +127,8 @@ export const projects = [
   {
     slug: "stockivia",
     name: "Stockivia",
-    host: "stockivia-app.vercel.app",
-    href: "https://stockivia-app.vercel.app/",
+    host: "stockivia.com",
+    href: "https://stockivia.com/",
     image: "/projects/stockivia.webp",
     kind: "Business software",
     year: "2023",
