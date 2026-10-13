@@ -41,20 +41,34 @@ export const socials = [
  * `note` renders as a small qualifier chip next to the project name.
  * `image` is a live screenshot of the site, captured at 1200×750 into
  * public/projects/ — the card preview leads with it.
+ * Listed oldest to newest by when each was built, so new work goes last.
  */
 export const projects = [
   {
-    slug: "redcore",
-    name: "RedCore",
-    host: "redcore.ac",
-    href: "https://www.redcore.ac/",
-    image: "/projects/redcore.webp",
-    kind: "Security platform",
-    year: "2026",
-    accent: "#FF6B6B",
+    slug: "stockivia",
+    name: "Stockivia",
+    host: "stockivia.com",
+    href: "https://stockivia.com/",
+    image: "/projects/stockivia.webp",
+    kind: "Business software",
+    year: "2023",
+    accent: "#4ADE80",
     summary:
-      "A verification service for game server owners. It scans a player's PC and reports whether cheat software, wiped logs, or hidden second accounts turned up, so admins can decide who gets in with actual evidence.",
-    stack: ["React", "Node", "Subscriptions"],
+      "Stock and sales management for small businesses. Track what you have, invoice customers, and see what's actually selling, all from one dashboard instead of three spreadsheets.",
+    stack: ["React", "Node", "PostgreSQL"],
+  },
+  {
+    slug: "estifham",
+    name: "Estifham",
+    host: "estifham-app.vercel.app",
+    href: "https://estifham-app.vercel.app/",
+    image: "/projects/estifham.webp",
+    kind: "Web app",
+    year: "2024",
+    accent: "#BB9AF7",
+    summary:
+      "A trivia platform with over 200 questions across 20 categories. Built to feel instant on a phone, with rounds short enough to play while waiting for coffee.",
+    stack: ["React", "Tailwind", "Vercel"],
   },
   {
     slug: "loupgarou",
@@ -69,6 +83,32 @@ export const projects = [
     summary:
       "Werewolf played online with friends. Up to 16 players get one of 20 roles, then argue their way through night and day rounds around a 3D campfire. Create a room, share the code, and everyone is in without installing anything.",
     stack: ["React", "WebSockets", "Three.js"],
+  },
+  {
+    slug: "pagi-development",
+    name: "Pagi Development",
+    host: "pagi-developement.tebex.io",
+    href: "https://pagi-developement.tebex.io/",
+    image: "/projects/pagi-development.webp",
+    kind: "Script store",
+    year: "2026",
+    accent: "#22D3EE",
+    summary:
+      "My own storefront for FiveM server scripts. Optimized resources for ESX, QBCore and ox_lib, sold with instant delivery, lifetime updates and support on Discord, running on over 500 servers.",
+    stack: ["Tebex", "Lua", "FiveM"],
+  },
+  {
+    slug: "redcore",
+    name: "RedCore",
+    host: "redcore.ac",
+    href: "https://www.redcore.ac/",
+    image: "/projects/redcore.webp",
+    kind: "Security platform",
+    year: "2026",
+    accent: "#FF6B6B",
+    summary:
+      "A verification service for game server owners. It scans a player's PC and reports whether cheat software, wiped logs, or hidden second accounts turned up, so admins can decide who gets in with actual evidence.",
+    stack: ["React", "Node", "Subscriptions"],
   },
   {
     slug: "smia",
@@ -110,45 +150,6 @@ export const projects = [
     summary:
       "A redesign for an Algerian parcel carrier, written Arabic first with the whole layout mirrored for RTL and a full English translation behind one toggle. A 3D map of the 58 wilayas doubles as the input for a live shipping estimator, so picking a province on the map prices the delivery.",
     stack: ["Next.js", "Three.js", "Arabic RTL"],
-  },
-  {
-    slug: "estifham",
-    name: "Estifham",
-    host: "estifham-app.vercel.app",
-    href: "https://estifham-app.vercel.app/",
-    image: "/projects/estifham.webp",
-    kind: "Web app",
-    year: "2024",
-    accent: "#BB9AF7",
-    summary:
-      "A trivia platform with over 200 questions across 20 categories. Built to feel instant on a phone, with rounds short enough to play while waiting for coffee.",
-    stack: ["React", "Tailwind", "Vercel"],
-  },
-  {
-    slug: "stockivia",
-    name: "Stockivia",
-    host: "stockivia.com",
-    href: "https://stockivia.com/",
-    image: "/projects/stockivia.webp",
-    kind: "Business software",
-    year: "2023",
-    accent: "#4ADE80",
-    summary:
-      "Stock and sales management for small businesses. Track what you have, invoice customers, and see what's actually selling, all from one dashboard instead of three spreadsheets.",
-    stack: ["React", "Node", "PostgreSQL"],
-  },
-  {
-    slug: "pagi-development",
-    name: "Pagi Development",
-    host: "pagi-developement.tebex.io",
-    href: "https://pagi-developement.tebex.io/",
-    image: "/projects/pagi-development.webp",
-    kind: "Script store",
-    year: "2026",
-    accent: "#22D3EE",
-    summary:
-      "My own storefront for FiveM server scripts. Optimized resources for ESX, QBCore and ox_lib, sold with instant delivery, lifetime updates and support on Discord, running on over 500 servers.",
-    stack: ["Tebex", "Lua", "FiveM"],
   },
   {
     slug: "pagi-labz",
